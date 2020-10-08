@@ -1,4 +1,4 @@
-User = require('./userModel');
+User = require('./models/user');
 // Handle index actions: get all users
 exports.index = function (req, res) { 
     User.get(function (err, users) {
@@ -16,21 +16,14 @@ exports.index = function (req, res) {
     });
 };
 // Handle create user actions
-exports.new = function (req, res) {
-    var user = new User();
-    user.name = req.body.name ? req.body.name : user.name;
-    user.gender = req.body.gender;
-    user.email = req.body.email;
-    user.phone = req.body.phone;
-// save the user and check for errors
-    user.save(function (err) {
-        // if (err)
-        //     res.json(err);
-res.json({
-            message: 'New user created!',
-            data: user
-        });
-    });
+exports.new = async (req, res) => {
+    var user = new User(req.body);
+    try {
+        await user.save();
+        res.send(user);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 };
 // Handle view user info
 exports.view = function (req, res) {

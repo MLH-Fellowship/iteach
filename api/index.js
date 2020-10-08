@@ -12,7 +12,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/resthub', { useNewUrlParser: true});
+mongoose.connect('mongodb+srv://diana:zusammendiana@zusammen.pgxiy.mongodb.net/test?retryWrites=true&w=majority', 
+{ 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 var db = mongoose.connection;
 
 // Added check for DB connection
@@ -31,5 +35,5 @@ app.get('/', (req, res) => res.send('try /api'));
 app.use('/api', apiRoutes);
 // Launch app to listen to specified port
 app.listen(port, function () {
-    console.log("Running RestHub on port " + port);
+    console.log("Server is running on port " + port);
 });
