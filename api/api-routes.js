@@ -10,6 +10,16 @@ router.get('/', function (req, res) {
 });
 
 
+const {
+    loginUser,
+    signUpUser
+} = require('./auth');
+
+// Users
+
+router.route('/login').post(loginUser);
+router.route('/signup').post(signUpUser);
+
 // Import user controller
 var userController = require('./userController');
 // Contact routes
