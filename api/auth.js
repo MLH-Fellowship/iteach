@@ -11,7 +11,7 @@ var firebaseConfig = {
     appId: "1:470554307038:web:9c97f4bcc09533fffbd54f",
     measurementId: "G-TE71CT4LQY"
   };
-  firebase.initializeApp(firebaseConfig);
+  exports.firebase = firebase.initializeApp(firebaseConfig);
 
 // Login
 exports.loginUser = (request, response) => {

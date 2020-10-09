@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
-    },
+    }
+    /*
     surname: {
         type: String,
         required: true
@@ -17,7 +18,7 @@ var userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true
-    }
+    }*/
 });
 
 // Export model
