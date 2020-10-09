@@ -26,7 +26,7 @@ var userController = require('./userController');
 router.route('/users')
     .get(userController.index)
     .post(userController.new);
-router.route('/users/:user_id')
+router.route('/user/:user_id')
     .get(userController.view)
     .patch(userController.update)
     .put(userController.update)

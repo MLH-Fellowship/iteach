@@ -1,9 +1,6 @@
 User = require('./models/user');
 const auth = require('./auth');
 
-//initialize firebase
-var firebaseRef = auth.firebase;
-
 // Handle index actions: get all users
 exports.index = function (req, res) { 
     User.get(function (err, users) {
@@ -20,27 +17,30 @@ exports.index = function (req, res) {
         });
     });
 };
+
 // Handle create user actions
-exports.new = async (req, res) => {
+exports.new = function (req, res) {
     var user = new User(req.body);
 
     //gets the user id token 
-    firebaseRef.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+    /*firebaseRef.auth().currentUser.getIdToken(true).then(function(idToken) {
         User._id=idToken;
       }).catch(function(error) {
             res.status(500).send(error);
       });
-
+*/
     try {
-        await user.save();
+        user.save();
         res.send(user);
     } catch (err) {
         res.status(500).send(err);
     }
 };
+
+
 // Handle view user info
 exports.view = function (req, res) {
-    User.findById(req.params.user_id, function (err, user) {
+    User.findById(req.params._id, function (err, user) {
         if (err)
             res.send(err);
         res.json({
@@ -54,10 +54,7 @@ exports.update = function (req, res) {
 User.findById(req.params.user_id, function (err, user) {
         if (err)
             res.send(err);
-user.name = req.body.name ? req.body.name : user.name;
-        user.gender = req.body.gender;
-        user.email = req.body.email;
-        user.phone = req.body.phone;
+        user.name = req.body.name;
 // save the user and check for errors
         user.save(function (err) {
             if (err)
