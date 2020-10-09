@@ -1,4 +1,7 @@
 User = require('./models/user');
+//initialize firebase
+var firebaseRef = new Firebase("https://zusammen-83794.firebaseio.com");
+
 // Handle index actions: get all users
 exports.index = function (req, res) { 
     User.get(function (err, users) {
@@ -18,6 +21,12 @@ exports.index = function (req, res) {
 // Handle create user actions
 exports.new = async (req, res) => {
     var user = new User(req.body);
+
+    //gets the user id if the user is authenticated
+    firebaseRef.onAuth(function (authData) {
+        user._id = authData.user_id;
+    })
+
     try {
         await user.save();
         res.send(user);
