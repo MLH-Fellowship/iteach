@@ -37,12 +37,12 @@ exports.new = function (req, res) {
     }
 };
 
-
 // Handle view user info
-exports.view = function (req, res) {
-    User.findById(req.params._id, function (err, user) {
+// TO DO: authenticate user
+exports.getUserDetail = function (req, res) {
+    User.findById(req.params.user_id, function (err, user) {
         if (err)
-            res.send(err);
+            res.send(err);        
         res.json({
             message: 'User details loading..',
             data: user
