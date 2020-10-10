@@ -1,6 +1,7 @@
 // api-routes.js
-// Initialize express router
 let router = require('express').Router();
+let auth =require('./authConfig');
+
 // Set default API response
 router.get('/', function (req, res) {
     res.json({
@@ -9,28 +10,26 @@ router.get('/', function (req, res) {
     });
 });
 
-
-const {
-    loginUser,
-    signUpUser
-} = require('./auth');
-
 // Users
-
-router.route('/login').post(loginUser);
-router.route('/signup').post(signUpUser);
-
-// Import user controller
 var userController = require('./userController');
-// Contact routes
+
+router.route('/login').post(userController.loginUser);
+router.route('/signup').post(userController.signUpUser);
+
 router.route('/users')
     .get(userController.index)
-    .post(userController.new);
 router.route('/user/:user_id')
-    .get(userController.getUserDetail)
+    .get(auth.authenticate, userController.getUserDetail)
     .patch(userController.update)
-    .put(userController.update)
+    .put(auth.authenticate, userController.update)
     .delete(userController.delete);
+
+
+var teacherController = require('./teacherController');
+router.route('/teachers')
+    .get(teacherController.index)
+    .post(teacherController.new);
+
 // Export API routes
 module.exports = router;
 

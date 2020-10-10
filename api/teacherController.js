@@ -21,7 +21,7 @@ exports.index = function (req, res) {
 exports.new = function (req, res) {
     var teacher = new Teacher();
     teacher._id = req.body._id;
-    teacher.bio = req.body.bio;
+    teacher.skill = req.body.skill;
 
     teacher.save(function (err) {
          if (err)
