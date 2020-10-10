@@ -1,10 +1,16 @@
 var mongoose = require('mongoose');
 // Setup schema
 var userSchema = mongoose.Schema({
+    /*_id: {
+        type: String,
+        unique: true
+    },*/
+
     name: {
         type: String,
         required: true
-    },
+    }
+    /*
     surname: {
         type: String,
         required: true
@@ -12,7 +18,7 @@ var userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true
-    }
+    }*/
 });
 
 // Export model
