@@ -21,14 +21,6 @@ exports.index = function (req, res) {
 // Handle create user actions
 exports.new = function (req, res) {
     var user = new User(req.body);
-
-    //gets the user id token 
-    /*firebaseRef.auth().currentUser.getIdToken(true).then(function(idToken) {
-        User._id=idToken;
-      }).catch(function(error) {
-            res.status(500).send(error);
-      });
-*/
     try {
         user.save();
         res.send(user);

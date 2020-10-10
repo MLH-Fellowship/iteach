@@ -1,24 +1,26 @@
 var mongoose = require('mongoose');
 // Setup schema
 var userSchema = mongoose.Schema({
-    /*_id: {
-        type: String,
-        unique: true
-    },*/
-
+    email: {
+        type: String
+    },
+    uid: { //firebase id
+        type: String 
+    },
     name: {
         type: String,
         required: true
-    }
-    /*
+    },
     surname: {
         type: String,
         required: true
     },
-    email: {
-        type: String,
-        required: true
-    }*/
+    bio: {
+        type: String
+    },
+    profilePicture: {
+        type: String
+    }
 });
 
 // Export model

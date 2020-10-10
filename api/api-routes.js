@@ -27,9 +27,10 @@ router.route('/users')
     .get(userController.index)
     .post(userController.new);
 router.route('/user/:user_id')
-    .get(userController.view)
+    .get(userController.getUserDetail)
     .patch(userController.update)
     .put(userController.update)
     .delete(userController.delete);
 // Export API routes
 module.exports = router;
+
