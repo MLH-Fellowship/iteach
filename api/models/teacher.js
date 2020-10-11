@@ -8,7 +8,8 @@ var teacherSchema = mongoose.Schema({
     skill: {
         type: String,
         required: true
-    }
+    },
+    availability: [{}]
 });
 
 // Export model
