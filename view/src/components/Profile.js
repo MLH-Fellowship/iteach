@@ -2,6 +2,7 @@ import TeacherList from './TeacherList';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import agent from '../agent';
+import ScheduleSelector from "react-schedule-selector";
 import { connect } from 'react-redux';
 import {
   PROFILE_PAGE_LOADED,
@@ -24,7 +25,8 @@ const EditProfileSettings = props => {
 const mapStateToProps = state => ({
   ...state.teachersList,
   currentUser: state.common.currentUser,
-  profile: state.profile
+  profile: state.profile,
+  schedule: state.schedule
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -77,13 +79,15 @@ class Profile extends React.Component {
 
     return (
       <div className="profile-page">
-
         <div className="user-info">
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
-
-                <img src={profile.image} className="user-img" alt={profile.username} />
+                <img
+                  src={profile.image}
+                  className="user-img"
+                  alt={profile.username}
+                />
                 <h4>{profile.username}</h4>
                 <p>{profile.bio}</p>
                 <EditProfileSettings isUser={isUser} />
@@ -94,23 +98,26 @@ class Profile extends React.Component {
 
         <div className="container">
           <div className="row">
-
             <div className="col-xs-12 col-md-10 offset-md-1">
+              <div className="articles-toggle">{this.renderTabs()}</div>
 
-              <div className="articles-toggle">
-                {this.renderTabs()}
-              </div>
+              <ScheduleSelector
+                selection={this.props.schedule}
+                margin="1"
+                numDays="14"
+                selectionScheme="linear"
+                onChange={this.handleChange}
+              />
 
               <TeacherList
                 pager={this.props.pager}
                 articles={this.props.articles}
                 teachersCount={this.props.teachersCount}
-                state={this.props.currentPage} />
+                state={this.props.currentPage}
+              />
             </div>
-
           </div>
         </div>
-
       </div>
     );
   }
