@@ -15,11 +15,17 @@ const mapDispatchToProps = dispatch => ({
   onChangeEmail: value =>
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value }),
   onChangePassword: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
-  onChangeUsername: value =>
-    dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value }),
-  onSubmit: (username, email, password) => {
-    const payload = agent.Auth.register(username, email, password);
+    dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }), 
+  onChangeName: value =>
+    dispatch({ type: UPDATE_FIELD_AUTH, key: 'name', value }),
+  onChangeSurname: value =>
+    dispatch({ type: UPDATE_FIELD_AUTH, key: 'surname', value }),
+  onChangeBio: value =>
+    dispatch({ type: UPDATE_FIELD_AUTH, key: 'bio', value }),
+  onChangePicture: value =>
+    dispatch({ type: UPDATE_FIELD_AUTH, key: 'profilePicture', value }),
+  onSubmit: (email, password, name, surname, bio, profilePicture) => {
+    const payload = agent.Auth.register(email, password, name, surname, bio, profilePicture);
     dispatch({ type: REGISTER, payload })
   },
   onUnload: () =>
@@ -29,12 +35,15 @@ const mapDispatchToProps = dispatch => ({
 class Register extends React.Component {
   constructor() {
     super();
-    this.changeEmail = ev => this.props.onChangeEmail(ev.target.value);
-    this.changePassword = ev => this.props.onChangePassword(ev.target.value);
-    this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-    this.submitForm = (username, email, password) => ev => {
+    this.changeEmail = ev => this.mapDispatchToProps.onChangeEmail(ev.target.value);
+    this.changePassword = ev => this.mapDispatchToProps.onChangePassword(ev.target.value);
+    this.changeName = ev => this.mapDispatchToProps.onChangeName(ev.target.value);
+    this.changeSurname = ev => this.mapDispatchToProps.onChangeSurname(ev.target.value);
+    this.changeBio = ev => this.mapDispatchToProps.onChangeBio(ev.target.value);
+    this.changePicture= ev => this.mapDispatchToProps.onChangePicture(ev.target.value);
+    this.submitForm = (email, password, name, surname, bio, profilePicture) => ev => {
       ev.preventDefault();
-      this.props.onSubmit(username, email, password);
+      this.mapDispatchToProps.onSubmit(email, password, name, surname, bio, profilePicture);
     }
   }
 
@@ -45,7 +54,10 @@ class Register extends React.Component {
   render() {
     const email = this.props.email;
     const password = this.props.password;
-    const username = this.props.username;
+    const name = this.props.name;
+    const surname = this.props.surname;
+    const bio = this.props.bio;
+    const profilePicture = this.props.profilePicture;
 
     return (
       <div className="auth-page">
@@ -62,62 +74,63 @@ class Register extends React.Component {
 
               <ListErrors errors={this.props.errors} />
 
-              <form onSubmit={this.submitForm(username, email, password)}>
+              <form onSubmit={this.submitForm(email, password, name, surname, bio, profilePicture)}>
                 <fieldset>
 
-                  <fieldset className="form-group">
-                    <input
-                      className="form-control form-control-lg"
-                      type="text"
-                      placeholder="Username"
-                      value={this.props.username}
-                      onChange={this.changeUsername} />
-                  </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="email"
                       placeholder="Email"
-                      value={this.props.email}
-                      onChange={this.changeEmail} />
+                      value={this.email.value}
+                      onChange={this.changeEmail}/>
                   </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="password"
-                      placeholder="Password"
-                      value={this.props.password}
-                      onChange={this.changePassword} />
+                      placeholder="Password" 
+                      value={this.password.value}
+                      onChange={this.changePassword}/>
                   </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="text"
-                      placeholder="First Name" />
+                      placeholder="First Name"
+                      value={this.name.value}
+                      onChange={this.changeName}
+ />
                   </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="text"
-                      placeholder="Last Name" />
+                      placeholder="Last Name"
+                      value={this.surname.value}
+                      onChange={this.changeSurname}  />
                   </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="text"
-                      placeholder="Bio" />
+                      placeholder="Bio" 
+                      value={this.bio.value}
+                      onChange={this.changeBio} />
                   </fieldset>
 
                   <fieldset className="form-group">
                     <input
                       className="form-control form-control-lg"
                       type="text"
-                      placeholder="Profile Picture Url" />
+                      placeholder="Profile Picture Url" 
+                      value={this.profilePicture.value}
+                      onChange={this.changePicture} />
                   </fieldset>
 
                   <button
