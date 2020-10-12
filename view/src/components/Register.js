@@ -35,15 +35,15 @@ const mapDispatchToProps = dispatch => ({
 class Register extends React.Component {
   constructor() {
     super();
-    this.changeEmail = ev => this.mapDispatchToProps.onChangeEmail(ev.target.value);
-    this.changePassword = ev => this.mapDispatchToProps.onChangePassword(ev.target.value);
-    this.changeName = ev => this.mapDispatchToProps.onChangeName(ev.target.value);
-    this.changeSurname = ev => this.mapDispatchToProps.onChangeSurname(ev.target.value);
-    this.changeBio = ev => this.mapDispatchToProps.onChangeBio(ev.target.value);
-    this.changePicture= ev => this.mapDispatchToProps.onChangePicture(ev.target.value);
+    this.changeEmail = ev =>this.props.onChangeEmail(ev.target.value);
+    this.changePassword = ev => this.props.onChangePassword(ev.target.value);
+    this.changeName = ev => this.props.onChangeName(ev.target.value);
+    this.changeSurname = ev => this.props.onChangeSurname(ev.target.value);
+    this.changeBio = ev => this.props.onChangeBio(ev.target.value);
+    this.changePicture= ev =>this.props.onChangePicture(ev.target.value);
     this.submitForm = (email, password, name, surname, bio, profilePicture) => ev => {
       ev.preventDefault();
-      this.mapDispatchToProps.onSubmit(email, password, name, surname, bio, profilePicture);
+      this.props.onSubmit(email, password, name, surname, bio, profilePicture);
     }
   }
 
@@ -58,7 +58,7 @@ class Register extends React.Component {
     const surname = this.props.surname;
     const bio = this.props.bio;
     const profilePicture = this.props.profilePicture;
-
+    console.log("email"+this.email);
     return (
       <div className="auth-page">
         <div className="container page">
@@ -83,7 +83,7 @@ class Register extends React.Component {
                       className="form-control form-control-lg"
                       type="email"
                       placeholder="Email"
-                      value={this.email.value}
+                      value={this.props.email}
                       onChange={this.changeEmail}/>
                   </fieldset>
 
@@ -92,7 +92,7 @@ class Register extends React.Component {
                       className="form-control form-control-lg"
                       type="password"
                       placeholder="Password" 
-                      value={this.password.value}
+                      value={this.props.password}
                       onChange={this.changePassword}/>
                   </fieldset>
 
@@ -101,7 +101,7 @@ class Register extends React.Component {
                       className="form-control form-control-lg"
                       type="text"
                       placeholder="First Name"
-                      value={this.name.value}
+                      value={this.props.name}
                       onChange={this.changeName}
  />
                   </fieldset>
@@ -111,7 +111,7 @@ class Register extends React.Component {
                       className="form-control form-control-lg"
                       type="text"
                       placeholder="Last Name"
-                      value={this.surname.value}
+                      value={this.props.surname}
                       onChange={this.changeSurname}  />
                   </fieldset>
 
@@ -120,7 +120,7 @@ class Register extends React.Component {
                       className="form-control form-control-lg"
                       type="text"
                       placeholder="Bio" 
-                      value={this.bio.value}
+                      value={this.props.bio}
                       onChange={this.changeBio} />
                   </fieldset>
 
@@ -129,7 +129,7 @@ class Register extends React.Component {
                       className="form-control form-control-lg"
                       type="text"
                       placeholder="Profile Picture Url" 
-                      value={this.profilePicture.value}
+                      value={this.props.profilePicture}
                       onChange={this.changePicture} />
                   </fieldset>
 
