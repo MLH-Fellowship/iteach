@@ -24,8 +24,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'bio', value }),
   onChangePicture: value =>
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'profilePicture', value }),
-  onSubmit: (email, password, name, surname, bio, profilePicture) => {
-    const payload = agent.Auth.register(email, password, name, surname, bio, profilePicture);
+  onSubmit: (email, password, name) => {
+    const payload = agent.Auth.register(email, password, name);
     dispatch({ type: REGISTER, payload })
   },
   onUnload: () =>
@@ -43,7 +43,7 @@ class Register extends React.Component {
     this.changePicture= ev =>this.props.onChangePicture(ev.target.value);
     this.submitForm = (email, password, name, surname, bio, profilePicture) => ev => {
       ev.preventDefault();
-      this.props.onSubmit(email, password, name, surname, bio, profilePicture);
+      this.props.onSubmit(email, password, name);
     }
   }
 
