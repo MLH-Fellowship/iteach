@@ -12,6 +12,11 @@ import {
 
 const mapStateToProps = state => ({ ...state.auth });
 
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const mapDispatchToProps = dispatch => ({
   onChangeEmail: value =>
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'email', value }),
@@ -27,8 +32,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'profilePicture', value }),
   onSubmit: (email, password, name) => {
     const payload = agent.Auth.register(email, password, name);
-    console.log("dispatch");
-    console.log("payload"+payload);
     dispatch({ type: REGISTER, payload })
   },
   onUnload: () =>
