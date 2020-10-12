@@ -9,6 +9,7 @@ import {
   REGISTER_PAGE_UNLOADED
 } from '../constants/actionTypes';
 
+
 const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
@@ -42,6 +43,7 @@ class Register extends React.Component {
     this.changeBio = ev => this.props.onChangeBio(ev.target.value);
     this.changePicture= ev =>this.props.onChangePicture(ev.target.value);
     this.submitForm = (email, password, name, surname, bio, profilePicture) => ev => {
+      console.log("email "+ email);
       ev.preventDefault();
       this.props.onSubmit(email, password, name);
     }
@@ -58,7 +60,7 @@ class Register extends React.Component {
     const surname = this.props.surname;
     const bio = this.props.bio;
     const profilePicture = this.props.profilePicture;
-    console.log("email"+this.email);
+
     return (
       <div className="auth-page">
         <div className="container page">
@@ -74,7 +76,7 @@ class Register extends React.Component {
 
               <ListErrors errors={this.props.errors} />
 
-              <form onSubmit={this.submitForm(email, password, name, surname, bio, profilePicture)}>
+              <form onSubmit={this.submitForm(email, password, name)}>
                 <fieldset>
 
 

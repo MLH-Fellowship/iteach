@@ -44,8 +44,10 @@ const Auth = {
     requests.get('/user'),
   login: (email, password) =>
     requests.post('/users/login', { user: { email, password } }),
-  register: (email, password, name) =>
-    our_requests.post('/signup', { user: {email, password, name} }),
+  register: (email, password, name) =>{
+    console.log("Auth"+email);
+    our_requests.post('/signup', { user: {email, password, name} })
+  },
   save: user =>
     requests.put('/user', { user })
 };
