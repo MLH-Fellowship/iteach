@@ -25,8 +25,7 @@ const EditProfileSettings = props => {
 const mapStateToProps = state => ({
   ...state.teachersList,
   currentUser: state.common.currentUser,
-  profile: state.profile,
-  schedule: state.schedule
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -68,11 +67,45 @@ class Profile extends React.Component {
     );
   }
 
+  
+	handleChange = (event) => {
+    alert("booking!")
+	};
+  
+
   render() {
     const profile = this.props.profile;
     if (!profile) {
       return null;
     }
+
+    // TEST ARRAY: THIS WILL BE REPLACED WITH API RESPONSE
+    var available = [
+      {
+        "day": 1,
+        "hour": 11
+      },
+      {
+        "day": 3,
+        "hour": 10
+      }
+  ] 
+
+  
+  // getDay(): 0 for Sunday, 1 for Monday, 2 for Tuesday, 3 for Wed
+    const scheduleArray = [];
+    available.map((slot) => {
+      var start = new Date();
+      start.setMinutes(0);
+      var end = new Date();
+      end.setDate(end.getDate() + 14);
+      for (;start < end; start.setHours(start.getHours()+1)) {
+        if (start.getDay()===slot.day && start.getHours()==slot.hour) {
+          scheduleArray.push(new Date(start));
+        }
+    }
+    })
+
 
     const isUser = this.props.currentUser &&
       this.props.profile.username === this.props.currentUser.username;
@@ -102,10 +135,10 @@ class Profile extends React.Component {
               <div className="articles-toggle">{this.renderTabs()}</div>
 
               <ScheduleSelector
-                selection={this.props.schedule}
+                selection={scheduleArray}
                 margin="1"
                 numDays="14"
-                selectionScheme="linear"
+                selectionScheme="square"
                 onChange={this.handleChange}
               />
 
