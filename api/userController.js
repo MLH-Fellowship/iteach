@@ -23,27 +23,40 @@ exports.loginUser = (request, response) => {
 
 
 exports.signUpUser = (request, response) => {
+    console.log("email "+ request.body.user.email);
+    console.log("password "+ request.body.user.password);
+
     var tokenDB, userId;
     var user;
     firebase
     .auth()
-    .createUserWithEmailAndPassword(request.body.email, request.body.password)
+    .createUserWithEmailAndPassword(request.body.user.email, request.body.user.password)
     .then((data) => {
+        console.log("saving");
         userId = data.user.uid;
+        console.log("token"+data.user.getIdToken);
         return data.user.getIdToken();
     })
+    /*
+    .catch(function(error){
+        console.log(error);
+    })*/
     .then((token) => {
         tokenDB = token;
         user = new User({
-            email: request.body.email,
-            name: request.body.name,
-            surname: request.body.surname,
-            bio: request.body.bio,
-            profilePicture: request.body.profilePicture,
+            email: request.body.user.email,
+            name: request.body.user.name,
+            surname: request.body.user.surname,
+            bio: request.body.user.bio,
+            profilePicture: request.body.user.profilePicture,
             uid: userId //firebase id
                 });
         
     })
+    /*
+    .catch(function(error) {
+        console.log(error);
+    })*/
     .then(()=>{
         user.save();
         return response.status(201).json({ tokenDB });
@@ -52,6 +65,7 @@ exports.signUpUser = (request, response) => {
         if (error.code === 'auth/email-already-in-use') {
             return response.status(400).json({ email: 'Email already in use' });
         } else {
+            console.log("something went wrong.");
             return response.status(500).json({ general: 'Something went wrong, please try again' });
         }
     })
