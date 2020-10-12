@@ -4,6 +4,11 @@ let config = require('./config/firebase');
 const firebase = require('firebase');
 firebase.initializeApp(config);
 
+
+process.on('unhandledRejection', function(err) {
+    console.log(err);
+});
+
 // Login
 exports.loginUser = (request, response) => {
     firebase
@@ -34,7 +39,6 @@ exports.signUpUser = (request, response) => {
     .then((data) => {
         console.log("saving");
         userId = data.user.uid;
-        console.log("token"+data.user.getIdToken);
         return data.user.getIdToken();
     })
     /*
@@ -42,6 +46,7 @@ exports.signUpUser = (request, response) => {
         console.log(error);
     })*/
     .then((token) => {
+        console.log("token backend"+token);
         tokenDB = token;
         user = new User({
             email: request.body.user.email,
@@ -53,13 +58,14 @@ exports.signUpUser = (request, response) => {
                 });
         
     })
-    /*
     .catch(function(error) {
         console.log(error);
-    })*/
+        return response.status(500).json({ general: 'Something went wrong, please try again' });
+
+    })
     .then(()=>{
         user.save();
-        return response.status(201).json({ tokenDB });
+        return response.status(201).send({user: {token: tokenDB}})
     })
     .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {

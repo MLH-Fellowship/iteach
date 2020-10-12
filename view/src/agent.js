@@ -12,6 +12,7 @@ const responseBody = res => res.body;
 let token = null;
 const tokenPlugin = req => {
   if (token) {
+    console.log("token not null"+token);
     req.set('authorization', `Token ${token}`);
   }
 }
@@ -45,9 +46,17 @@ const Auth = {
   login: (email, password) =>
     requests.post('/users/login', { user: { email, password } }),
   register: (email, password, name) =>{
-    console.log("Auth"+email);
     our_requests.post('/signup', { user: {email, password, name} })
-  },
+    .then((response) => {
+      console.log("response!");
+      console.log(response);
+      localStorage.setItem('AuthToken', `${response.user.token}`);
+      return response;
+  })
+    .catch((error) => {
+    console.log("error!"+error);
+  })
+},
   save: user =>
     requests.put('/user', { user })
 };
