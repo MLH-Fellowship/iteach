@@ -30,7 +30,7 @@ exports.updateTeacher = function (req, res) {
     Teacher.findById(req.params.teacher_id, function (err, teacher) {
         if (err)
             res.send(err);
-        console.log("schedule"+req.body.schedule)
+        console.log("schedule"+JSON.stringify(req.body.schedule))
         teacher.schedule = req.body.schedule;
 // save the user and check for errors
         teacher.save(function (err) {

@@ -18,7 +18,8 @@ class OurTeacherProfile extends React.Component {
     super(props);
     this.state = {
       teacher: {},
-      schedule: []
+      schedule: [],
+      checkedBoxes: []
     };
   }
 
@@ -26,10 +27,10 @@ class OurTeacherProfile extends React.Component {
     axios
       .get(`http://localhost:8080/api/teachers/${this.props.match.params.id}`)
       .then((response)=> {
-          console.log("responsedata"+JSON.stringify(response.data));
           this.setState({
             teacher: response.data,
-            schedule: response.data.schedule
+            schedule: response.data.schedule,
+            checkedBoxes: []
           })
     })
   }
@@ -49,6 +50,7 @@ class OurTeacherProfile extends React.Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
+    
     let index = -1;
     let newSchedule = [...this.state.schedule];
     
@@ -58,25 +60,29 @@ class OurTeacherProfile extends React.Component {
           break;
       }
     }
-
-    let item = {
-      ...newSchedule[index],
-      booked: true
-  };
-    newSchedule[index]= item;
     this.setState(prevState => ({
-      schedule: newSchedule
+      checkedBoxes: [...prevState.checkedBoxes, index]
     }))
   }
 
+   
   handleSubmit = (e) => {
-    alert("submit!");
-    axios.put((`http://localhost:8080/api/teachers/${this.state.teacher._id}`), {schedule: this.state.schedule})
-    .then((response)=> {
-      console.log(response);
-    })
     //e.preventDefault();
-
+    let indexes = this.state.checkedBoxes;
+    let newSchedule = [...this.state.schedule];
+    for (let i=0; i<indexes.length;i++) {
+      let item = {
+        ...newSchedule[indexes[i]],
+        booked: true
+    };
+    newSchedule[indexes[i]]= item;
+    this.setState({ schedule: newSchedule}, () => {
+      axios.put((`http://localhost:8080/api/teachers/${this.state.teacher._id}`), {schedule: this.state.schedule})
+      .then((response)=> {
+        console.log(response);
+      })
+    });
+  }
   }
 
   renderArray() {
@@ -85,7 +91,7 @@ class OurTeacherProfile extends React.Component {
     return arr.map((day) => {
       console.log("day"+day.date)
       i = i+1;
-      //if (day.booked==false)  {
+      if (day.booked==false)  {
         let d = new Date(day.date);
         let n = d.toString();
         return(
@@ -95,7 +101,7 @@ class OurTeacherProfile extends React.Component {
         <label for={day}>{n}</label>
           </div>
         )
-       // }
+        }
     })
     
   }
