@@ -4,16 +4,21 @@ let config = require('./config/firebase');
 const firebase = require('firebase');
 firebase.initializeApp(config);
 
+
+process.on('unhandledRejection', function(err) {
+    console.log(err);
+});
+
 // Login
 exports.loginUser = (request, response) => {
     firebase
         .auth()
-        .signInWithEmailAndPassword(request.body.email, request.body.password)
+        .signInWithEmailAndPassword(request.body.user.email, request.body.user.password)
         .then((data) => {
             return data.user.getIdToken();
         })
         .then((token) => {
-            return response.json({ token });
+            return response.status(200).send({user: {token: token}})
         })
         .catch((error) => {
             console.error(error);
@@ -27,32 +32,39 @@ exports.signUpUser = (request, response) => {
     var user;
     firebase
     .auth()
-    .createUserWithEmailAndPassword(request.body.email, request.body.password)
+    .createUserWithEmailAndPassword(request.body.user.email, request.body.user.password)
     .then((data) => {
         userId = data.user.uid;
         return data.user.getIdToken();
     })
+    /*
+    .catch(function(error){
+        console.log(error);
+    })*/
     .then((token) => {
         tokenDB = token;
         user = new User({
-            email: request.body.email,
-            name: request.body.name,
-            surname: request.body.surname,
-            bio: request.body.bio,
-            profilePicture: request.body.profilePicture,
+            email: request.body.user.email,
+            name: request.body.user.name,
+            surname: request.body.user.surname,
             uid: userId //firebase id
                 });
         
     })
+    .catch(function(error) {
+        console.log(error);
+        return response.status(500).json({ general: 'Something went wrong, please try again' });
+
+    })
     .then(()=>{
         user.save();
-        return response.status(201).json({ tokenDB });
+        return response.status(201).send({user: {token: tokenDB}})
     })
     .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
-            return response.status(400).json({ email: 'Email already in use' });
+            return response.status(400).send({errors: { email: 'Email already in use' }});
         } else {
-            return response.status(500).json({ general: 'Something went wrong, please try again' });
+            return response.status(500).send({errors: { general: 'Something went wrong, please try again'  }});
         }
     })
 }
@@ -94,6 +106,7 @@ User.findById(req.params.user_id, function (err, user) {
         if (err)
             res.send(err);
         user.name = req.body.name;
+        user.surname = req.body.surname
 // save the user and check for errors
         user.save(function (err) {
             if (err)

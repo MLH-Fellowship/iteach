@@ -14,12 +14,6 @@ var userSchema = mongoose.Schema({
     surname: {
         type: String,
         required: true
-    },
-    bio: {
-        type: String
-    },
-    profilePicture: {
-        type: String
     }
 });
 

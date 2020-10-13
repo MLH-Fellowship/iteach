@@ -25,8 +25,7 @@ const EditProfileSettings = props => {
 const mapStateToProps = state => ({
   ...state.teachersList,
   currentUser: state.common.currentUser,
-  profile: state.profile,
-  schedule: state.schedule,
+  profile: state.profile
 });
 
 const mapDispatchToProps = dispatch => ({
