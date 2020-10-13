@@ -7,7 +7,7 @@ import { CHANGE_TAB } from '../../constants/actionTypes';
 const TeachersTab = props => {
   const clickHandler = ev => {
     ev.preventDefault();
-    props.onTabClick('all', agent.Articles.all, agent.Articles.all());
+    props.onTabClick(agent.Teachers.all);
   };
   return (
     <li className="nav-item">
@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, pager, payload) => dispatch({ type: CHANGE_TAB, tab, pager, payload })
+  onTabClick: (payload) => dispatch({ type: CHANGE_TAB, payload })
 });
 
 const MainView = props => {
@@ -60,7 +60,7 @@ const MainView = props => {
 
       <TeacherList
         pager={props.pager}
-        articles={props.articles}
+        articles={"T1", "T2", "T3"}
         loading={props.loading}
         teachersCount={props.teachersCount}
         currentPage={props.currentPage} />

@@ -13,12 +13,12 @@ process.on('unhandledRejection', function(err) {
 exports.loginUser = (request, response) => {
     firebase
         .auth()
-        .signInWithEmailAndPassword(request.body.email, request.body.password)
+        .signInWithEmailAndPassword(request.body.user.email, request.body.user.password)
         .then((data) => {
             return data.user.getIdToken();
         })
         .then((token) => {
-            return response.json({ token });
+            return response.status(200).send({user: {token: token}})
         })
         .catch((error) => {
             console.error(error);
@@ -28,16 +28,12 @@ exports.loginUser = (request, response) => {
 
 
 exports.signUpUser = (request, response) => {
-    console.log("email "+ request.body.user.email);
-    console.log("password "+ request.body.user.password);
-
     var tokenDB, userId;
     var user;
     firebase
     .auth()
     .createUserWithEmailAndPassword(request.body.user.email, request.body.user.password)
     .then((data) => {
-        console.log("saving");
         userId = data.user.uid;
         return data.user.getIdToken();
     })
@@ -69,10 +65,9 @@ exports.signUpUser = (request, response) => {
     })
     .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {
-            return response.status(400).json({ email: 'Email already in use' });
+            return response.status(400).send({errors: { email: 'Email already in use' }});
         } else {
-            console.log("something went wrong.");
-            return response.status(500).json({ general: 'Something went wrong, please try again' });
+            return response.status(500).send({errors: { general: 'Something went wrong, please try again'  }});
         }
     })
 }

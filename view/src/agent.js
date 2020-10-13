@@ -43,12 +43,19 @@ const Auth = {
   current: () =>
     requests.get('/user'),
   login: (email, password) =>
-    requests.post('/users/login', { user: { email, password } }),
+    our_requests.post('/login', { user: { email, password } }),
   register: (email, password, name) =>
     our_requests.post('/signup', { user: {email, password, name} }),
   save: user =>
     requests.put('/user', { user })
 };
+
+
+const Teachers = {
+  all: () =>
+    our_requests.get('/teachers')
+};
+
 
 const Tags = {
   getAll: () => requests.get('/tags')
@@ -56,6 +63,9 @@ const Tags = {
 
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 const omitSlug = article => Object.assign({}, article, { slug: undefined })
+
+
+
 const Articles = {
   all: page =>
     requests.get(`/articles?${limit(10, page)}`),
@@ -93,5 +103,6 @@ export default {
   Auth,
   Profile,
   Tags,
+  Teachers,
   setToken: _token => { token = _token; }
 };
