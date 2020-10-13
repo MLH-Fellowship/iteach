@@ -6,6 +6,7 @@ import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { Route, Switch } from 'react-router-dom';
 import Home from '../components/Home';
 import Login from '../components/Login';
+import ApplyToTeach from "../components/ApplyToTeach";
 import Profile from './Profile';
 import Register from '../components/Register';
 import Settings from '../components/Settings';
@@ -50,14 +51,22 @@ class App extends React.Component {
         <div>
           <Header
             appName={this.props.appName}
-            currentUser={this.props.currentUser} />
-            <Switch>
-            <Route exact path="/" component={Home}/>
+            currentUser={this.props.currentUser}
+          />
+          <Switch>
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/applyToTeach" component={ApplyToTeach} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Settings} />
+<<<<<<< HEAD
             <Route path="/@:id" component={Profile} />
             </Switch>
+=======
+            <Route path="/@:username/teachers" component={ProfileTeachers} />
+            <Route path="/@:username" component={Profile} />
+          </Switch>
+>>>>>>> e5adb952052b71e444377ffe7f5c36017894db1f
         </div>
       );
     }
