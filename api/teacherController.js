@@ -1,5 +1,5 @@
 Teacher = require('./models/teacher');
-
+User = require('./models/user');
 // Handle index actions: get all
 exports.index = function (req, res) { 
     Teacher.get(function (err, teachers) {
@@ -9,26 +9,53 @@ exports.index = function (req, res) {
                 message: err,
             });
         }
-        res.json({
-            status: "success",
-            message: "Teacher retrieved successfully",
-            data: teachers
-        });
+        res.status(200).send(teachers);
     });
 };
 
 // Handle create user actions
-exports.new = function (req, res) {
-    var teacher = new Teacher();
-    teacher._id = req.body._id;
-    teacher.skill = req.body.skill;
-
-    teacher.save(function (err) {
-         if (err)
-             res.json(err);
-res.json({
-            message: 'New teacher created!',
-            data: teacher
+exports.new = function (req, res) {  
+    User.findById(req.body._id, function (err, user) {
+        if (err) {
+            console.log(err);   
+        }
+        var teacher = new Teacher({
+            _id: req.body._id,
+            skill: req.body.skill,
+            availability: req.body.availability,
+            name: user.name,
+            surname: user.surname,
+            bio: user.bio
+        });
+        teacher.save(function (err) {
+             if (err)
+                 res.json(err);
+            res.status(200).send(teacher);
         });
     });
+    
 };
+
+
+//example request
+/*
+{
+    "_id": "5f80e2e175b4275c185c30c4",
+    "skill": "English",
+    "availability": [
+        {
+            "day": 0,
+            "hour": 23
+
+    },
+    {
+        "day": 0,
+        "hour": 11
+    }
+    ]
+
+}
+
+*/
+
+

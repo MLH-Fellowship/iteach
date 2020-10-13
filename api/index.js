@@ -4,6 +4,9 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let app = express();
 
+var cors = require('cors')
+app.use(cors()) 
+
 // Import routes
 let apiRoutes = require("./api-routes");
 // Configure bodyparser to handle post requests
@@ -13,7 +16,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb+srv://diana:'+process.env.MONGODB_PASSWORD + '@zusammen.pgxiy.mongodb.net/test?retryWrites=true&w=majority', 
+mongoose.connect('mongodb+srv://diana:zusammendiana@zusammen.pgxiy.mongodb.net/test?retryWrites=true&w=majority', 
 { 
     useNewUrlParser: true,
     useUnifiedTopology: true
