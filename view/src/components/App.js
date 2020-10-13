@@ -47,6 +47,8 @@ class App extends React.Component {
 
   render() {
     if (this.props.appLoaded) {
+      //            <Route path="/@:username/teachers" component={ProfileTeachers} />
+
       return (
         <div>
           <Header
@@ -59,14 +61,8 @@ class App extends React.Component {
             <Route path="/applyToTeach" component={ApplyToTeach} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Settings} />
-<<<<<<< HEAD
-            <Route path="/@:id" component={Profile} />
-            </Switch>
-=======
-            <Route path="/@:username/teachers" component={ProfileTeachers} />
             <Route path="/@:username" component={Profile} />
           </Switch>
->>>>>>> e5adb952052b71e444377ffe7f5c36017894db1f
         </div>
       );
     }
