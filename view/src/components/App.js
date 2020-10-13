@@ -7,6 +7,9 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import OurTeacherProfile from './OurTeacherProfile';
+import ApplyToTeach from "../components/ApplyToTeach";
+import Profile from './Profile';
+import ProfileTeachers from './ProfileTeachers';
 import Register from '../components/Register';
 import Settings from '../components/Settings';
 import { store } from '../store';
@@ -50,14 +53,18 @@ class App extends React.Component {
         <div>
           <Header
             appName={this.props.appName}
-            currentUser={this.props.currentUser} />
-            <Switch>
-            <Route exact path="/" component={Home}/>
+            currentUser={this.props.currentUser}
+          />
+          <Switch>
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/applyToTeach" component={ApplyToTeach} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Settings} />
             <Route path="/@:id" component={OurTeacherProfile} />
-            </Switch>
+            <Route path="/@:username/teachers" component={ProfileTeachers} />
+            <Route path="/@:username" component={Profile} />
+          </Switch>
         </div>
       );
     }

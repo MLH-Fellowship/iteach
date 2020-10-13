@@ -4,8 +4,9 @@
   "description": "simple restful API",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "publishToHeroku": "cd ../ && git subtree push --prefix api https://git.heroku.com/zusammen-backend.git master || true"
   },
   "author": "diana",
   "license": "ISC",
@@ -18,5 +19,8 @@
     "firebase-admin": "^9.2.0",
     "firebaseui": "^4.6.1",
     "mongoose": "^5.10.8"
+  },
+  "engines": {
+    "node": "10.16.3"
   }
 }
