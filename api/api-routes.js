@@ -30,7 +30,8 @@ router.route('/teachers')
     .get(teacherController.index)
     .post(teacherController.new);
 router.route('/teachers/:teacher_id')
-    .get(teacherController.getTeacher);
+    .get(teacherController.getTeacher)
+    .put(teacherController.updateTeacher);
 
 // Export API routes
 module.exports = router;

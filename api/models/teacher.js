@@ -23,7 +23,8 @@ var teacherSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    availability: [{}]
+    availability: [{}],
+    schedule: [{}]
 });
 
 // Export model
