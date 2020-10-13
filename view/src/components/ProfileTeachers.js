@@ -1,4 +1,4 @@
-import { Profile, mapStateToProps } from './Profile';
+import { Profile } from './Profile';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import agent from '../agent';
@@ -43,4 +43,4 @@ class ProfileTeachers extends Profile {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileTeachers);
+export default (ProfileTeachers);

@@ -42,14 +42,24 @@ class TeacherList extends React.Component {
 
   return _.map(this.state.teachers, teacher => {
     return(
-      <div>
-        <div>{teacher.name}</div>
-        <div>{teacher.skill}</div>
+    <div className="article-preview">
+      <div className="article-meta">
+          <img src={teacher.profilePicture} alt={teacher.name} />
+        </div>
+        <div className="info">
+          <div className="author">{teacher.name} {teacher.surname}</div>
       </div>
-    )
-  })
+
+      <div className="preview-link">
+    <h2>I teach {teacher.skill}</h2>
+    <p>{teacher.bio}</p>
+      </div>
+      </div>
+  )})
 };
 }
-
+/*  <div>
+          <img src={teacher.profilePicture} alt={teacher.name} />
+        <div>*/
 
 export default TeacherList;

@@ -4,65 +4,40 @@ import { Link } from 'react-router-dom';
 import agent from '../agent';
 import ScheduleSelector from "react-schedule-selector";
 import { connect } from 'react-redux';
+import axios from 'axios';
+
 import {
   PROFILE_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED
 } from '../constants/actionTypes';
 
-const EditProfileSettings = props => {
-  if (props.isUser) {
-    return (
-      <Link
-        to="/settings"
-        className="btn btn-sm btn-outline-secondary action-btn">
-        <i className="ion-gear-a"></i> Edit Profile Settings
-      </Link>
-    );
-  }
-  return null;
-};
-
-const mapStateToProps = state => ({
-  ...state.teachersList,
-  currentUser: state.common.currentUser,
-  profile: state.profile
-});
-
-const mapDispatchToProps = dispatch => ({
-  onLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
-  onUnload: () => dispatch({ type: PROFILE_PAGE_UNLOADED })
-});
 
 class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teacher: {}
+    };
+  }
+
   componentWillMount() {
-    this.props.onLoad(Promise.all([
-      agent.Profile.get(this.props.match.params.username),
-      agent.Articles.byAuthor(this.props.match.params.username)
-    ]));
+    console.log("this.props"+JSON.stringify(this.props.match.params.id))
+    axios
+      .get(`http://localhost:8080/api/teachers/${this.props.match.params.id}`)
+      .then((response)=> {
+          this.setState({
+            teacher: response.data
+          })
+    })
   }
 
   componentWillUnmount() {
-    this.props.onUnload();
   }
 
   renderTabs() {
     return (
       <ul className="nav nav-pills outline-active">
-        <li className="nav-item">
-          <Link
-            className="nav-link active"
-            to={`/@${this.props.profile.username}`}>
-            My info
-          </Link>
-        </li>
-
-        <li className="nav-item">
-          <Link
-            className="nav-link"
-            to={`/@${this.props.profile.username}/teachers`}>
-            My teachers
-          </Link>
-        </li>
+        
       </ul>
     );
   }
@@ -74,13 +49,9 @@ class Profile extends React.Component {
   
 
   render() {
-    const profile = this.props.profile;
-    if (!profile) {
-      return null;
-    }
-
+    var teacher = this.state.teacher;
     // TEST ARRAY: THIS WILL BE REPLACED WITH API RESPONSE
-    var available = [
+    var test = [
       {
         "day": 1,
         "hour": 11
@@ -90,7 +61,13 @@ class Profile extends React.Component {
         "hour": 10
       }
   ] 
+  console.log("api response "+JSON.stringify(teacher.availability))
+  console.log("test "+JSON.stringify(test))
 
+  var available = test; 
+  console.log("available "+JSON.stringify(available))
+
+    
   
   // getDay(): 0 for Sunday, 1 for Monday, 2 for Tuesday, 3 for Wed
     const scheduleArray = [];
@@ -106,24 +83,15 @@ class Profile extends React.Component {
     }
     })
 
-
-    const isUser = this.props.currentUser &&
-      this.props.profile.username === this.props.currentUser.username;
-
     return (
       <div className="profile-page">
         <div className="user-info">
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
-                <img
-                  src={profile.image}
-                  className="user-img"
-                  alt={profile.username}
-                />
-                <h4>{profile.username}</h4>
-                <p>{profile.bio}</p>
-                <EditProfileSettings isUser={isUser} />
+               <img src={teacher.profilePicture} className="user-img" alt={teacher.name}></img>
+              <h2>{teacher.name} {teacher.surname}</h2>
+              <p>{teacher.bio}</p>
               </div>
             </div>
           </div>
@@ -132,21 +100,13 @@ class Profile extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-12 col-md-10 offset-md-1">
-              <div className="articles-toggle">{this.renderTabs()}</div>
-
+              <h2>Book a lesson with me!</h2>
               <ScheduleSelector
                 selection={scheduleArray}
                 margin="1"
                 numDays="14"
                 selectionScheme="square"
                 onChange={this.handleChange}
-              />
-
-              <TeacherList
-                pager={this.props.pager}
-                articles={this.props.articles}
-                teachersCount={this.props.teachersCount}
-                state={this.props.currentPage}
               />
             </div>
           </div>
@@ -156,5 +116,4 @@ class Profile extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
-export { Profile, mapStateToProps };
+export default Profile;

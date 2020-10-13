@@ -53,17 +53,10 @@ const MainView = props => {
 
           <TeachersTab tab={props.tab} onTabClick={props.onTabClick} />
 
-          <TagFilterTab tag={props.tag} />
-
         </ul>
       </div>
 
-      <TeacherList
-        pager={props.pager}
-        articles={"T1", "T2", "T3"}
-        loading={props.loading}
-        teachersCount={props.teachersCount}
-        currentPage={props.currentPage} />
+      <TeacherList />
     </div>
   );
 };

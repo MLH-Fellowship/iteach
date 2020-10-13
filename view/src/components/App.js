@@ -7,7 +7,6 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import Profile from './Profile';
-import ProfileTeachers from './ProfileTeachers';
 import Register from '../components/Register';
 import Settings from '../components/Settings';
 import { store } from '../store';
@@ -57,8 +56,7 @@ class App extends React.Component {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Settings} />
-            <Route path="/@:username/teachers" component={ProfileTeachers} />
-            <Route path="/@:username" component={Profile} />
+            <Route path="/@:id" component={Profile} />
             </Switch>
         </div>
       );
