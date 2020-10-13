@@ -13,6 +13,19 @@ exports.index = function (req, res) {
     });
 };
 
+exports.getTeacher = function (req, res) {
+
+    console.log("getTeacher");
+    Teacher.findById(req.params.teacher_id, function(err, teacher) {
+        if (err)
+            res.send(err);
+        console.log("getTeacher"+teacher);
+        res.send(teacher);
+    });
+};
+
+
+
 // Handle create user actions
 exports.new = function (req, res) {  
     User.findById(req.body._id, function (err, user) {

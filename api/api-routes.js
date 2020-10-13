@@ -29,6 +29,8 @@ var teacherController = require('./teacherController');
 router.route('/teachers')
     .get(teacherController.index)
     .post(teacherController.new);
+router.route('/teachers/:teacher_id')
+    .get(teacherController.getTeacher);
 
 // Export API routes
 module.exports = router;
