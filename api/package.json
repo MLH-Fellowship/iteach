@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "publishToHeroku": "cd ../ && git subtree push --prefix api zusammen-backend master || true"
+    "publishToHeroku": "cd ../ && git subtree push --prefix api https://git.heroku.com/zusammen-backend.git master || true"
   },
   "author": "diana",
   "license": "ISC",
