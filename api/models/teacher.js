@@ -9,6 +9,13 @@ var teacherSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    name:{
+        type: String,
+        //required: true
+    },
+    surname: {
+        type: String
+    },
     availability: [{}]
 });
 

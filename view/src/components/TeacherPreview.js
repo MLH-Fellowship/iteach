@@ -26,17 +26,12 @@ const TeacherPreview = props => {
 
   const handleClick = ev => {
     ev.preventDefault();
-    if (article.favorited) {
-      props.unfavorite(article.slug);
-    } else {
-      props.favorite(article.slug);
-    }
   };
 
   return (
     <div className="article-preview">
       <div className="article-meta">
-        <Link to={`/@${article.author.username}`}>
+        <Link to={`/@${article}`}>
           <img src={article.author.image} alt={article.author.username} />
         </Link>
 

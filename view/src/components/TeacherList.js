@@ -1,38 +1,55 @@
 import TeacherPreview from './TeacherPreview';
 import ListPagination from './ListPagination';
 import React from 'react';
+import _superagent from 'superagent';
+import axios from 'axios';
+import _ from 'lodash';
 
-const TeacherList = props => {
-  if (!props.articles) {
-    return (
-      <div className="teacher-preview">Loading...</div>
-    );
+
+class TeacherList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teachers: []
+    };
   }
+  
+  componentDidMount(){
+    axios
+      .get('http://localhost:8080/api/teachers')
+      .then((response)=> {
+          this.setState({
+            teachers: response.data
+          });
+    })
+  }
+  
+  render() {
+    console.log("myteachers:"+JSON.stringify(this.state.teachers));
+    if (!this.state.teachers) {
+      return (
+        <div className="teacher-preview">Loading...</div>
+      );
+    }
+  
+    if (this.state.teachers.length === 0) {
+      return (
+        <div className="teacher-preview">
+          No teachers yet!
+        </div>
+      );
+    }
 
-  if (props.articles.length === 0) {
-    return (
-      <div className="teacher-preview">
-        No teachers yet!
+  return _.map(this.state.teachers, teacher => {
+    return(
+      <div>
+        <div>{teacher.name}</div>
+        <div>{teacher.skill}</div>
       </div>
-    );
-  }
-
-  return (
-    <div>
-      {
-        props.articles.map(article => {
-          return (
-            <TeacherPreview article={article} key={article.slug} />
-          );
-        })
-      }
-
-      <ListPagination
-        pager={props.pager}
-        teachersCount={props.teachersCount}
-        currentPage={props.currentPage} />
-    </div>
-  );
+    )
+  })
 };
+}
+
 
 export default TeacherList;
