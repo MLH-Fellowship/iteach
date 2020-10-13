@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Profile } from './Profile';
+=======
+import { Profile } from './OurTeacherProfile';
+>>>>>>> b5dff5dc835f55778e9d80ad27e83e83f608973a
 import React from 'react';
 import { Link } from 'react-router-dom';
 import agent from '../agent';

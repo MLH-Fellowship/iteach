@@ -6,6 +6,7 @@ import { APP_LOAD, REDIRECT } from '../constants/actionTypes';
 import { Route, Switch } from 'react-router-dom';
 import Home from '../components/Home';
 import Login from '../components/Login';
+import OurTeacherProfile from './OurTeacherProfile';
 import ApplyToTeach from "../components/ApplyToTeach";
 import Profile from './Profile';
 import Register from '../components/Register';
@@ -61,6 +62,8 @@ class App extends React.Component {
             <Route path="/applyToTeach" component={ApplyToTeach} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Settings} />
+            <Route path="/@:id" component={OurTeacherProfile} />
+            <Route path="/@:username/teachers" component={ProfileTeachers} />
             <Route path="/@:username" component={Profile} />
           </Switch>
         </div>
