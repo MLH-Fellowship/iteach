@@ -1,4 +1,4 @@
-import { Profile } from './Profile';
+import { Profile } from './OurTeacherProfile';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import agent from '../agent';
