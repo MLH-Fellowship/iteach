@@ -4,7 +4,8 @@
   "description": "simple restful API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "diana",
   "license": "ISC",
@@ -16,5 +17,8 @@
     "firebase-admin": "^9.2.0",
     "firebaseui": "^4.6.1",
     "mongoose": "^5.10.8"
+  },
+  "engines": {
+    "node": "10.6.3"
   }
 }
