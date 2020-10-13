@@ -42,14 +42,11 @@ exports.signUpUser = (request, response) => {
         console.log(error);
     })*/
     .then((token) => {
-        console.log("token backend"+token);
         tokenDB = token;
         user = new User({
             email: request.body.user.email,
             name: request.body.user.name,
             surname: request.body.user.surname,
-            bio: request.body.user.bio,
-            profilePicture: request.body.user.profilePicture,
             uid: userId //firebase id
                 });
         
@@ -109,6 +106,7 @@ User.findById(req.params.user_id, function (err, user) {
         if (err)
             res.send(err);
         user.name = req.body.name;
+        user.surname = req.body.surname
 // save the user and check for errors
         user.save(function (err) {
             if (err)

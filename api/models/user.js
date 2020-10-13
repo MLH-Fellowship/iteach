@@ -13,12 +13,7 @@ var userSchema = mongoose.Schema({
     },
     surname: {
         type: String,
-    },
-    bio: {
-        type: String
-    },
-    profilePicture: {
-        type: String
+        required: true
     }
 });
 

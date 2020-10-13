@@ -94,8 +94,8 @@ const Articles = {
 const Profile = {
   follow: username =>
     requests.post(`/profiles/${username}/follow`),
-  get: username =>
-    requests.get(`/profiles/${username}`),
+  get: id =>
+    our_requests.get(`/teachers/${id}`),
 };
 
 export default {
