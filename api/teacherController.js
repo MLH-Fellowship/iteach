@@ -14,8 +14,7 @@ exports.index = function (req, res) {
 };
 
 // Handle create user actions
-exports.new = function (req, res) {
-  
+exports.new = function (req, res) {  
     User.findById(req.body._id, function (err, user) {
         if (err) {
             console.log(err);   
@@ -23,6 +22,7 @@ exports.new = function (req, res) {
         var teacher = new Teacher({
             _id: req.body._id,
             skill: req.body.skill,
+            availability: req.body.availability,
             name: user.name,
             surname: user.surname,
             bio: user.bio
@@ -35,4 +35,27 @@ exports.new = function (req, res) {
     });
     
 };
+
+
+//example request
+/*
+{
+    "_id": "5f80e2e175b4275c185c30c4",
+    "skill": "English",
+    "availability": [
+        {
+            "day": 0,
+            "hour": 23
+
+    },
+    {
+        "day": 0,
+        "hour": 11
+    }
+    ]
+
+}
+
+*/
+
 
