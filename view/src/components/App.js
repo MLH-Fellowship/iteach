@@ -49,7 +49,6 @@ class App extends React.Component {
   render() {
     if (this.props.appLoaded) {
       //            <Route path="/@:username/teachers" component={ProfileTeachers} />
-
       return (
         <div>
           <Header
@@ -59,11 +58,11 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/applyToTeach" component={ApplyToTeach} />
+            <Route path="/applyToTeach/@:id" component={ApplyToTeach} />
             <Route path="/register" component={Register} />
             <Route path="/settings" component={Settings} />
             <Route path="/@:id" component={OurTeacherProfile} />
-            <Route path="/@:username/teachers" component={ProfileTeachers} />
+           
             <Route path="/@:username" component={Profile} />
           </Switch>
         </div>

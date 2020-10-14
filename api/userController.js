@@ -9,8 +9,10 @@ process.on('unhandledRejection', function(err) {
     console.log(err);
 });
 
+
 // Login
 exports.loginUser = (request, response) => {
+    var userId;
     firebase
         .auth()
         .signInWithEmailAndPassword(request.body.user.email, request.body.user.password)
@@ -18,7 +20,13 @@ exports.loginUser = (request, response) => {
             return data.user.getIdToken();
         })
         .then((token) => {
-            return response.status(200).send({user: {token: token}})
+            User.findOne({'email':request.body.user.email}, function (err, user) {
+                if (err) console.log(err);
+                userId = user._id;
+                console.log("id (mongoDB)", userId);
+                return response.status(200).send({user: {token: token, id: userId}})
+            })
+            
         })
         .catch((error) => {
             console.error(error);
@@ -58,7 +66,7 @@ exports.signUpUser = (request, response) => {
     })
     .then(()=>{
         user.save();
-        return response.status(201).send({user: {token: tokenDB}})
+        return response.status(201).send({user: {token: tokenDB, id: user._id}})
     })
     .catch((error) => {
         if (error.code === 'auth/email-already-in-use') {

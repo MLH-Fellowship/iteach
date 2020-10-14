@@ -28,7 +28,8 @@ router.route('/user/:user_id')
 var teacherController = require('./teacherController');
 router.route('/teachers')
     .get(teacherController.index)
-    .post(teacherController.new);
+router.route('/teachers/:user_id')
+    .post(auth.authenticate,teacherController.new);
 router.route('/teachers/:teacher_id')
     .get(teacherController.getTeacher)
     .put(teacherController.updateTeacher);

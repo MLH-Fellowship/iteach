@@ -46,12 +46,6 @@ class TeacherList extends React.Component {
     return(
     <div className="article-preview">
       <div className="article-meta">
-<<<<<<< HEAD
-          <img src={teacher.profilePicture} alt={teacher.name} />
-        </div>
-        <div className="info">
-          <div className="author">{teacher.name} {teacher.surname}</div>
-=======
         <Link to={`@${teacher._id}`}>
           <img src={teacher.profilePicture} alt={teacher.name} />
           </Link>
@@ -60,19 +54,13 @@ class TeacherList extends React.Component {
         <Link to={`@${teacher._id}`}>
           <div className="author">{teacher.name} {teacher.surname}</div>
           </Link>
->>>>>>> b5dff5dc835f55778e9d80ad27e83e83f608973a
       </div>
 
       <div className="preview-link">
     <h2>I teach {teacher.skill}</h2>
     <p>{teacher.bio}</p>
-<<<<<<< HEAD
       </div>
       </div>
-=======
-      </div>
-      </div>
->>>>>>> b5dff5dc835f55778e9d80ad27e83e83f608973a
   )})
 };
 }

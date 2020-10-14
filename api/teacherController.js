@@ -44,14 +44,15 @@ exports.updateTeacher = function (req, res) {
     });
 }
 
-// Handle create user actions
 exports.new = function (req, res) {  
+    console.log("req"+JSON.stringify(req.body));
     User.findById(req.body._id, function (err, user) {
         if (err) {
             console.log(err);   
         }
 
         const scheduleArray = [{}];
+        if (req.body.availability) {
         req.body.availability.map((slot) => {
             var start = new Date();
             start.setMinutes(0);
@@ -61,7 +62,6 @@ exports.new = function (req, res) {
             end.setDate(end.getDate() + 14);
             for (;start < end; start.setHours(start.getHours()+1)) {
               if (start.getDay()===slot.day && start.getHours()==slot.hour) {
-                console.log("match!"+slot.day+slot.hour)
                 let newDate = new Object();
                 newDate.date = new Date(start);
                 newDate.booked = false;
@@ -69,6 +69,7 @@ exports.new = function (req, res) {
               }
           }
           })
+        }
 
         var teacher = new Teacher({
             _id: req.body._id,
@@ -84,7 +85,7 @@ exports.new = function (req, res) {
        
         teacher.save(function (err) {
              if (err)
-                 res.json(err);
+                res.status(500).send({errors: { general: 'Something went wrong, please try again'  }});
             res.status(200).send(teacher);
         });
     });

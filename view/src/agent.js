@@ -53,7 +53,9 @@ const Auth = {
 
 const Teachers = {
   all: () =>
-    our_requests.get('/teachers')
+    our_requests.get('/teachers'),
+  register: (skill, availability) =>
+    our_requests.post('/teachers', {skill})
 };
 
 
