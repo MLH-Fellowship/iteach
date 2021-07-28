@@ -1,12 +1,12 @@
-# zusammen
+# iTeach
 
 ![alt](https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)
 
 ## Summary
-Zusammen is an app for non-professional teachers to teach. As a teacher, all you need is write a bio of why you could be qualified. Teaching is all done in one-on-one zoom sessions, and our platform just helps in booking these sessions.
+iTeach is an app for non-professional teachers to teach. As a teacher, all you need is write a bio of why you could be qualified. Teaching is all done in one-on-one zoom sessions, and our platform just helps in booking these sessions.
 
 ## Additional information
-"zusammen" means together in German. The app is for non-professional teachers to get students' bookings. Once you sign up, you have the option to be a teacher as well as a student at the same time. You don't have to be an expert teacher. All you need to apply as a teacher is to write a bio of why you could be qualified. Teaching is all done in one-on-one zoom sessions. zusammen helps in booking the sessions. 
+The app is for non-professional teachers to get students' bookings. Once you sign up, you have the option to be a teacher as well as a student at the same time. You don't have to be an expert teacher. All you need to apply as a teacher is to write a bio of why you could be qualified. Teaching is all done in one-on-one zoom sessions. iTeach helps in booking the sessions. 
 
 ## Future plans
 1. As a teacher, once you collect a certain amount of points, you can start charging a fee for your sessions. You can teach whatever skill you think you are good at, from gym session training, to violin or coding an app.
